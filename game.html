@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pick a Piece of Paper</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        .papers {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .paper {
+            width: 100px;
+            height: 50px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .paper.disabled {
+            background-color: #ddd;
+            cursor: not-allowed;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pick a Piece of Paper</h1>
+    <div class="papers">
+        <div class="paper" onclick="pickPaper(this)">Paper 1</div>
+        <div class="paper" onclick="pickPaper(this)">Paper 2</div>
+        <div class="paper" onclick="pickPaper(this)">Paper 3</div>
+        <div class="paper" onclick="pickPaper(this)">Paper 4</div>
+        <div class="paper" onclick="pickPaper(this)">Paper 5</div>
+        <div class="paper" onclick="pickPaper(this)">Paper 6</div>
+    </div>
+    <div id="result"></div>
+
+    <script>
+        const names = ["Alice", "Bob", "Charlie", "David", "Eve", "Frank"];
+        let hasPicked = false; // Tracks if a paper has already been picked
+
+        function pickPaper(element) {
+            // Check if a paper is already picked
+            if (hasPicked) {
+                document.getElementById('result').innerText = "You've already picked a paper!";
+                return;
+            }
+
+            // Randomly assign a name from the list
+            const randomIndex = Math.floor(Math.random() * names.length);
+            const pickedName = names[randomIndex];
+
+            // Display the name on the paper
+            element.innerText = pickedName;
+            element.classList.add('disabled');
+
+            // Disable all papers
+            const papers = document.querySelectorAll('.paper');
+            papers.forEach(paper => paper.classList.add('disabled'));
+
+            // Update the result message
+            document.getElementById('result').innerText = `You picked: ${pickedName}`;
+
+            // Set the flag to true
+            hasPicked = true;
+        }
+    </script>
+</body>
+</html>
